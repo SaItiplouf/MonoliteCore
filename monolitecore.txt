@@ -1,0 +1,13 @@
+"monolitecore"
+{
+    "base"        "sandbox"
+    "title"       "MonoliteCore"
+    "version"     "0.1"
+    "category"    "rp"
+    "menusystem"  "1"
+    "hide"        "0"
+
+    "author_name" "Saltiplouf"
+    "author_email" ""
+    "author_url"  "https://github.com/SaItiplouf"
+}
