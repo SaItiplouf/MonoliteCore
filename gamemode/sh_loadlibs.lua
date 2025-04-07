@@ -24,21 +24,6 @@ local function LoadFile(relPath)
     end
 end
 
-local function loadDirectoryRecursive(directory)
-    local files, folders = file.Find(directory .. "/*", "LUA")
-    
-    -- Charger tous les fichiers du dossier courant
-    for _, fileName in ipairs(files) do
-        local filePath = directory .. "/" .. fileName
-        LoadFile(filePath)
-        print("[GAMEMODE] Loaded file: " .. filePath)
-    end
-
-    -- Parcourir les sous-dossiers et appeler récursivement la fonction
-    for _, folder in ipairs(folders) do
-        loadDirectoryRecursive(directory .. "/" .. folder)
-    end
-end
 
 function GM:ImportLibs()
     -- Chemin complet pour file.Exists (relatif à la racine de Garry's Mod)
@@ -56,7 +41,4 @@ function GM:ImportLibs()
             print("[IMPORTMAP] Couldn't load " .. lib.name .. " from " .. fullPath)
         end
     end
-
-    -- Charger récursivement tous les fichiers Lua du dossier gamemode
-    loadDirectoryRecursive()
 end

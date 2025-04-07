@@ -16,36 +16,35 @@
 --]]
 PIXEL = PIXEL or {}
 PIXEL.UI = PIXEL.UI or {}
-PIXEL.UI.Version = "1.3.2"
+PIXEL.UI.Version = "1.4.0"
 
 function PIXEL.LoadDirectory(path)
-	local files, folders = file.Find(path .. "/*", "LUA")
+    local files, folders = file.Find("gamemodes/" .. GM.FolderName .. "/gamemode/libs/pixel-ui-1.4.0/lua/" .. path .. "/*", "GAME")
+    
+    for _, fileName in ipairs(files) do
+        local filePath = "../" .. path .. "/" .. fileName
+        if CLIENT then
+            include(filePath)
+        else
+            if fileName:StartWith("cl_") then
+                AddCSLuaFile(filePath)
+            elseif fileName:StartWith("sh_") then
+                AddCSLuaFile(filePath)
+                include(filePath)
+            else
+                include(filePath)
+            end
+        end
+    end
 
-	for _, fileName in ipairs(files) do
-		local filePath = path .. "/" .. fileName
-
-		if CLIENT then
-			include(filePath)
-		else
-			if fileName:StartWith("cl_") then
-				AddCSLuaFile(filePath)
-			elseif fileName:StartWith("sh_") then
-				AddCSLuaFile(filePath)
-				include(filePath)
-			else
-				include(filePath)
-			end
-		end
-	end
-
-	return files, folders
+    return files, folders
 end
 
-function PIXEL.LoadDirectoryRecursive(basePath)
-	local _, folders = PIXEL.LoadDirectory(basePath)
-	for _, folderName in ipairs(folders) do
-		PIXEL.LoadDirectoryRecursive(basePath .. "/" .. folderName)
-	end
+function PIXEL.LoadDirectoryRecursive(relativePath)
+    local files, folders = PIXEL.LoadDirectory(relativePath)
+    for _, folderName in ipairs(folders) do
+        PIXEL.LoadDirectoryRecursive(relativePath .. "/" .. folderName)
+    end
 end
 
 PIXEL.LoadDirectoryRecursive("pixelui")
