@@ -121,18 +121,12 @@ function GM:InitializeToastSystem()
     end
     
     -- Exemple : afficher un toast de test une fois le système initialisé
-    self:Toast("Pixel UI est chargé et les toasts fonctionnent !", "success")
+    self:Toast("Welcome to MonoliteCore gamemode")
 end
 
--- Si Pixel UI est déjà chargé, initialiser immédiatement, sinon attendre via le hook
-if PIXEL and PIXEL.UI then
-    GM:InitializeToastSystem()
-else
-    hook.Add("PIXEL.UI.FullyLoaded", "GM:InitToastSystem", function()
-        print("Lazy load pixel")
+hook.Add("PIXEL.UI.FullyLoaded", "GM:InitToastSystem", function()
         GM:InitializeToastSystem()
-    end)
-end
+end)
 
 -- Gestion du net message pour les toast (s'il provient du serveur)
 net.Receive("DBToast", function(len)

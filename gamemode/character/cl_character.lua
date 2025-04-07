@@ -1,0 +1,41 @@
+-- -- cl_character.lua
+-- util.AddNetworkString("OpenCharacterCreation")
+
+-- net.Receive("OpenCharacterCreation", function()
+--     -- Créez ici une fenêtre Derma pour la création de personnage
+--     local frame = vgui.Create("DFrame")
+--     frame:SetSize(400, 300)
+--     frame:SetTitle("Créer votre personnage")
+--     frame:Center()
+--     frame:MakePopup()
+
+--     -- Ajoutez les champs de saisie, boutons, etc.
+--     local createButton = vgui.Create("DButton", frame)
+--     createButton:SetText("Créer")
+--     createButton:SetPos(150, 250)
+--     createButton:SetSize(100, 30)
+--     createButton.DoClick = function()
+--         -- Récupérer les données saisies et les envoyer au serveur
+--         net.Start("CreateCharacter")
+--             net.WriteInt(1000, 32)  -- argent par défaut ou saisi par le joueur
+--             net.WriteInt(100, 32)   -- vie par défaut
+--         net.SendToServer()
+--         frame:Close()
+--     end
+-- end)
+
+-- Du côté serveur, vous pouvez gérer la réception de ces données dans sv_character.lua :
+
+-- util.AddNetworkString("CreateCharacter")
+-- net.Receive("CreateCharacter", function(len, ply)
+--     local money = net.ReadInt(32)
+--     local health = net.ReadInt(32)
+--     local steamID = ply:SteamID()
+--     local charID = 1  -- ou déterminer dynamiquement l'ID du personnage
+--     local query = string.format(
+--         "INSERT INTO player_characters (steamid, char_id, money, health) VALUES (%s, %i, %i, %i)",
+--         sql.SQLStr(steamID), charID, money, health
+--     )
+--     sql.Query(query)
+--     ply:PrintMessage(HUD_PRINTTALK, "Personnage créé avec succès !")
+-- end)

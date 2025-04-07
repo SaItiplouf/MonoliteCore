@@ -4,11 +4,11 @@ require("mysqloo")
 -- files initialization
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
-AddCSLuaFile("sh_loadlibs.lua")
-AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("sh_fileloader.lua")
 include("shared.lua")
-include("sh_loadlibs.lua")
-GM:ImportLibs()
+include("sh_fileloader.lua")
+
+GM:ImportFiles()
 
 -- database start
 include("sv_init_db.lua")
@@ -18,3 +18,4 @@ include("sv_init_db.lua")
 function GM:Initialize()
     print("MonolithCore - Server Initialisation")
 end
+

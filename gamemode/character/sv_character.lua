@@ -1,0 +1,34 @@
+-- function GM:CheckOrCreateCharacter(ply)
+--     local steamID = ply:SteamID()
+--     local query = "SELECT * FROM player_characters WHERE steamid = " .. sql.SQLStr(steamID)
+--     local result = sql.Query(query)
+    
+--     if result == nil then
+--         -- Aucun personnage trouvé, créer un personnage par défaut ou envoyer une demande de création
+--         ply:PrintMessage(HUD_PRINTTALK, "Bienvenue sur le serveur ! Création de votre personnage en cours...")
+--         -- Exemple : insérer un personnage par défaut avec de l'argent et de la vie de départ
+--         local defaultMoney = 1000
+--         local defaultHealth = 100
+--         local charID = 1  -- Par exemple, pour le premier personnage
+--         local insertQuery = string.format(
+--             "INSERT INTO player_characters (steamid, char_id, money, health) VALUES (%s, %i, %i, %i)", 
+--             sql.SQLStr(steamID), charID, defaultMoney, defaultHealth
+--         )
+--         sql.Query(insertQuery)
+--         ply:PrintMessage(HUD_PRINTTALK, "Votre personnage a été créé.")
+        
+--         -- Vous pouvez également envoyer un net message pour ouvrir l'interface de création personnalisée si besoin.
+--     else
+--         -- Le joueur possède déjà un ou plusieurs personnages.
+--         ply:PrintMessage(HUD_PRINTTALK, "Sélectionnez votre personnage.")
+--         -- Envoyer la liste des personnages au client pour affichage dans une interface de sélection.
+--         net.Start("SendCharacterList")
+--             net.WriteTable(result)
+--         net.Send(ply)
+--     end
+-- end
+
+-- -- Surcharge de GM:PlayerInitialSpawn pour déclencher la vérification du personnage
+-- function GM:PlayerInitialSpawn(ply)
+--     self:CheckOrCreateCharacter(ply)
+-- end
