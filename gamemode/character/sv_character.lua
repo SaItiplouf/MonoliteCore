@@ -81,7 +81,10 @@ net.Receive("SelectCharacter", function(len, ply)
             ply:SetNWInt("Money", charData.money or 0)
             ply:SetNWString("RPName", charData.name or "Inconnu")
             ply:Spawn()
-            
+            ply:Freeze(false)
+            ply:SetNoDraw(false)
+
+
             net.Start("DBToast")
                 net.WriteString("Vous incarnez désormais : " .. (charData.name or "Inconnu"))
                 net.WriteString("success")
@@ -101,3 +104,28 @@ net.Receive("SelectCharacter", function(len, ply)
 
     q:start()
 end)
+
+function GM:SavePlayerCharacter(ply, context)
+    local steamID = ply:SteamID()
+    local pos = ply:GetPos()
+    local health = ply:Health()
+    local money = ply:GetNWInt("Money", 0)
+    local weapons = {}
+    for _, wep in ipairs(ply:GetWeapons()) do
+        table.insert(weapons, wep:GetClass())
+    end
+    local weaponsStr = util.TableToJSON(weapons)
+
+    local updateQuery = string.format(
+        "UPDATE player_characters SET health = %d, money = %d, pos = %s, weapons = %s WHERE steamid = %s",
+        health, money, sql.SQLStr(tostring(pos)), sql.SQLStr(weaponsStr), sql.SQLStr(steamID)
+    )
+    local q = db:query(updateQuery)
+    function q:onSuccess()
+        print("Mise à jour du personnage de " .. ply:Nick() .. " réussie lors de " .. context .. ".")
+    end
+    function q:onError(err)
+        print("[MySQL] Update error on " .. context .. ": " .. err)
+    end
+    q:start()
+end

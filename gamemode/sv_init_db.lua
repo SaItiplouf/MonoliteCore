@@ -31,7 +31,9 @@ local db_schema = {
             name VARCHAR(100) UNIQUE NOT NULL,
             playermodel VARCHAR(255) DEFAULT 'models/player/Group01/male_01.mdl' NOT NULL,
             money INT DEFAULT 0 NOT NULL,
-            health INT DEFAULT 100
+            health INT DEFAULT 100,
+            pos TEXT,
+            weapons TEXT
         )
     ]]
 }

@@ -43,7 +43,6 @@ function GM:InitializeCharacterInterface()
 
         local function ShowCharacterDetails(char)
             if not (char and char.name) then return end 
-            PrintTable(char)
             detailPanel:Clear()
 
             local detailTitle = vgui.Create("PIXEL.Label", detailPanel)
