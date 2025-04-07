@@ -16,7 +16,7 @@
 --]]
 PIXEL = PIXEL or {}
 PIXEL.UI = PIXEL.UI or {}
-PIXEL.UI.Version = "1.4.0"
+PIXEL.UI.Version = "1.3.2"
 
 if CLIENT then return end
 

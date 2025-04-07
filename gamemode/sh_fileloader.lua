@@ -1,6 +1,6 @@
 local tConfig = {
     basePath = "gamemodes/" .. GM.FolderName .. "/gamemode/",
-    exclude = { "init.lua", "cl_init.lua", "shared.lua" }
+    exclude = { "init.lua", "cl_init.lua", "shared.lua", "sv_init_db.lua" }
 }
 
 local function LoadFile(relPath)
@@ -24,8 +24,6 @@ end
 
 -- Fonction récursive qui traite uniquement la récursion
 local function ProcessDirectory(currentDir)
-    print("[IMPORTMAP] Scanning directory: " .. currentDir)
-    
     local files, directories = file.Find(currentDir .. "*", "GAME")
     
     for _, filename in ipairs(files) do
@@ -37,19 +35,18 @@ local function ProcessDirectory(currentDir)
                     local relativePath = fullPath:sub(#tConfig.basePath + 1)
                     LoadFile(relativePath)
                 else
-                    print("[IMPORTMAP] Couldn't load " .. filename .. " from " .. fullPath)
+                    -- print("[IMPORTMAP] Couldn't load " .. filename .. " from " .. fullPath)
                 end
             else
-                print("[IMPORTMAP] Skipped excluded file: " .. filename .. " in " .. currentDir)
+                -- print("[IMPORTMAP] Skipped excluded file: " .. filename .. " in " .. currentDir)
             end
         else
-            print("[IMPORTMAP] Ignored non-lua file: " .. filename .. " in " .. currentDir)
+            -- print("[IMPORTMAP] Ignored non-lua file: " .. filename .. " in " .. currentDir)
         end
     end
 
     for _, folder in ipairs(directories) do
         local folderPath = currentDir .. folder .. "/"
-        print("[IMPORTMAP] Found subdirectory: " .. folderPath)
         ProcessDirectory(folderPath)
     end
 end
